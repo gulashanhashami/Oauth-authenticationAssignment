@@ -2,13 +2,15 @@ const express = require("express");
 const passport = require("./configs/passport");
 
 const { register, login } = require("./controllers/auth.controller");
-//const productController = require("./controllers/product.controller");
+const productController = require("./controllers/product.controller");
 
 const app = express();
 app.use(express.json());
 app.post("/register", register);
 app.post("/login", login);
 app.use(passport.initialize());
+
+app.use("/products", productController); 
 
 passport.serializeUser(function (user, callback) {
   callback(null, user);
@@ -33,6 +35,6 @@ app.get(
 app.get("/auth/google/failure", (req, res) => {
   return res.send("Failure");
 });
-//app.use("/products", productController); 
+
  
 module.exports = app;
